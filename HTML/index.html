@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineSys</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- tailwind css -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+    <div class="min-h-screen bg-[#FAFAFA]">
+        <!-- heading -->
+        <header class="bg-[#2B303B] text-white px-4 py-3 flex items-center justify-between shadow-lg">
+            <h1 class="text-2xl text-white font-bold">DineSys</h1>
+            <div class="flex items-center gap-3 rounded-2xl backdrop-blur-md">
+                <h2> ADMIN</h2> <button
+                    class="flex items-center cursor-pointer gap-2 px-4 py-2 rounded-xl bg-blue-500 text-white font-semibold shadow-lg hover:scale-105 hover:shadow-indigo-500/40 active:scale-95 transition-all duration-200">
+                    <i class="fa-solid fa-bars-progress text-sm"></i> <span>POS</span> </button> <button
+                    class="w-10 h-10 cursor-pointer rounded-xl bg-orange-400 text-black backdrop-blur-md ">
+                    <i class="fa-solid fa-gear hover:rotate-90 transition-all duration-300"></i> </button> <button
+                    class="w-10 h-10 cursor-pointer rounded-xl bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> </button>
+            </div>
+        </header>
+        <main class="p-6">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl font-bold text-black mb-6">Menu</h1>
+                <div class="flex flex-col lg:flex-row gap-4 mb-6">
+                    <div class="w-full lg:w-3/4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                        <div
+                            class="bg-white rounded-xl px-4 py-3 border-2 border-[#E6E8EC] hover:border-green-400 transition-all cursor-pointer">
+                            <p class="text-gray-900 text-lg mb-2">Total Menu</p>
+                            <p id="totalMenu" class="text-3xl font-semibold text-black mb-3">0</p>
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="text-green-500 font-bold bg-green-500/20 px-3 rounded">+10</span>
+                                <span class="text-gray-400">Menu this month</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white md:w- rounded-xl px-4 py-2 border-2 border-[#E6E8EC] hover:border-green-400 transition-all">
+                            <p class="text-gray-900 text-xl mb-2">veg-menu</p>
+                            <p id="veg-menu" class=" text-3xl font-semibold text-black mb-3">0</p>
+                            <div class=" flex items-center gap-1 text-sm "> <span
+                                    class="text-green-500 font-bold bg-green-500/20 px-3 rounded">- 4</span> <span
+                                    class=" text-gray-400">Menu this month</span> </div>
+                        </div>
+                        <div
+                            class="bg-white rounded-xl px-4 py-3 border-2 border-[#E6E8EC] hover:border-green-400 transition-all">
+                            <p class="text-gray-900 text-lg mb-2">Non-Veg Menu</p>
+                            <p id="Nonveg-menu" class="text-3xl font-semibold text-black mb-3">0</p>
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="text-green-500 font-bold bg-green-500/20 px-3 rounded">+6</span>
+                                <span class="text-gray-400">This month</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white rounded-xl px-4 py-3 border-2 border-[#E6E8EC] hover:border-green-400 transition-all">
+                            <p class="text-gray-900 text-lg mb-2">Egg Menu</p>
+                            <p id="egg-menu" class="text-3xl font-semibold text-black mb-3">0</p>
+                            <div class="flex items-center gap-2 text-sm">
+                                <span class="text-green-500 font-bold bg-green-500/20 px-3 rounded">+6</span>
+                                <span class="text-gray-400">This month</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/4">
+                        <div
+                            class="bg-white rounded-xl px-3 py-3 border-2 border-[#E6E8EC] hover:border-green-400 transition-all h-full space-y-3">
+                            <div
+                                class="border border-gray-200 rounded-xl px-3 py-3 flex  items-center justify-between gap-2">
+                                <span class="text-gray-500 font-semibold flex items-center gap-2">
+                                    <i
+                                        class="fa-solid fa-folder-plus text-green-500 bg-green-500/20 px-2 py-1 rounded"></i>
+                                    New Menu
+                                </span>
+                                <button onclick="openModal()"
+                                    class="px-4 py-2 cursor-pointer bg-green-600 text-white rounded-lg text-sm hover:bg-green-500 w-full sm:w-auto">
+                                    Add New <i class="fa-solid fa-plus ml-1"></i>
+                                </button>
+                            </div>
+                            <div
+                                class="border border-gray-200 rounded-xl px-3 py-3 flex  items-center justify-between gap-2">
+                                <span class="text-gray-500 font-semibold flex items-center gap-2">
+                                    <i
+                                        class="fa-solid fa-arrows-turn-right text-red-600 bg-red-500/20 px-2 py-1 rounded"></i>
+                                    Action
+                                </span>
+                                <button onclick="location.reload()"
+                                    class="px-4 py-2 cursor-pointer bg-red-600 text-white rounded-lg text-sm hover:bg-red-500 w-full sm:w-auto">
+                                    Refresh <i
+                                        class="fa-solid fa-rotate hover:rotate-90 transition-all duration-300 ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="flex flex-wrap items-center gap-4 px-4 py-2 rounded-xl mb-4 ">
+                    <div class="relative flex-1 "> <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                            width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="8" cy="8" r="6"></circle>
+                            <line x1="14" y1="14" x2="18" y2="18"></line>
+                        </svg> <input id="searchItem" onkeyup="searchItems()" type="text"
+                            placeholder="Search by name, item ID..."
+                            class="w-full md:w-85 pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500" />
+                    </div>
+                    <div class="relative"> <select id="statusFilter"
+                            class="appearance-none px-4 py-2.5 pr-10 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option>All Status</option>
+                            <option> Veg Menu</option>
+                            <option> Non-Veg Menu</option>
+                            <option> Egg Menu</option>
+                        </select> <i id="selectIcon"
+                            class="fa-solid fa-angle-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <div class="relative inline-block">
+                        <button id="dateBtn"
+                            class="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-lg bg-white text-sm hover:bg-gray-50">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="12" height="11" rx="2" />
+                                <line x1="2" y1="7" x2="14" y2="7" />
+                            </svg> <span id="dateText">01/01/2018 - 01/15/2018</span> </button>
+                        <div id="calendarBox"
+                            class="hidden absolute mt-2 right-0 bg-white border rounded-xl shadow-lg p-4 w-72 z-50">
+                            <label class="text-xs text-gray-500">Start Date</label> <input type="date" id="startDate"
+                                class="w-full mt-1 mb-3 px-3 py-2 border rounded-lg text-sm" /> <label
+                                class="text-xs text-gray-500">End
+                                Date</label> <input type="date" id="endDate"
+                                class="w-full mt-1 mb-4 px-3 py-2 border rounded-lg text-sm" /> <button id="applyDate"
+                                class="w-full bg-green-500 text-white py-2 rounded-lg text-sm hover:bg-green-600"> Apply
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <div class="relative ">
+                        <button id="filterBtn"
+                            class="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-lg text-sm bg-white hover:bg-gray-50">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="3 4 15 4 9 11 9 15"></polygon>
+                            </svg>
+                            <span>Filters</span>
+                        </button>
+                    </div> -->
+                </div>
+                <!--------------------- table ------------------------>
+                <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full ">
+                            <thead class="bg-gray-50">
+                                <tr class="border-b text-center border-gray-200">
+                                    <th onclick="sortTableData('groupName')"
+                                        class="  4 py-3 font-semibold text-gray-700 ">GROUP <span
+                                            id="icon-groupName">↑↓</span></th>
+                                    <th onclick="sortTableData('itemCode')"
+                                        class="  px-4 py-3 font-semibold text-gray-700">CODE <span
+                                            id="icon-itemCode">↑↓</span></th>
+                                    <th onclick="sortTableData('itemName')"
+                                        class="  px-4 py-3 font-semibold text-gray-700">ITEM NAME <span
+                                            id="icon-itemName">↑↓</span></th>
+                                    <th class="px-4 py-3 font-semibold text-gray-700">ARABIC</th>
+                                    <th class="px-4 py-3 font-semibold text-gray-700">RATE</th>
+                                    <th class="px-4 py-3 font-semibold text-gray-700">SPL.RATE</th>
+                                    <th class="px-4 py-3 font-semibold text-gray-700">TAX% </th>
+                                    <th class="px-4 py-3 font-semibold text-gray-700">OPTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemTableBody" class=" bg-gray-200 text-center px-7">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <!-- pagination -->
+                <div class="flex justify-center items-center gap-2 mt-4">
+                    <button id="prevBtn"
+                        class="px-3 cursor-pointer py-1 border border-gray-400 hover:scale-105 hover:shadow-indigo-500/40 hover:bg-gray-400 active:scale-95 transition-all duration-200 rounded">
+                        ← Prev
+                    </button>
+
+                    <div id="pageNumbers" class="flex cursor-pointer gap-1"></div>
+
+                    <button id="nextBtn"
+                        class=" cursor-pointer px-3 py-1 border border-gray-400 hover:scale-105 hover:shadow-indigo-500/40 hover:bg-gray-400  active:scale-95 transition-all duration-200 rounded">
+                        Next →
+                    </button>
+                </div>
+
+        </main>
+    </div>
+    <!---------------------------------------------- modal ----------------------------------------------------->
+    <div id="modal" class="fixed inset-0 backdrop-blur-md bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="bg-teal-600 text-white px-6 py-4">
+                <h2 class="text-xl font-semibold">Item Entry</h2>
+            </div>
+            <div class="p-6 space-y-4 max-h-[calc(100vh-200px)] overflow-y-auto">
+                <!-- Item Name and Code -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Item Name</label>
+                        <input type="text" id="itemName" placeholder="Enter item name"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Code</label>
+                        <input type="text" id="itemCode" placeholder="Item code"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                </div>
+
+                <!-- Arabic Name -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Arabic Name</label>
+                    <input type="text" id="arabicName" placeholder="Enter Arabic name"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        dir="rtl">
+                </div>
+
+                <!-- Item Type -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Item Type:</label>
+                    <div class="flex gap-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="itemType" value="normal" checked
+                                class="w-4 h-4 text-teal-600 radio-checked">
+                            <span class="text-sm text-gray-700">Normal</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="itemType" value="topup"
+                                class="w-4 h-4 text-teal-600 radio-checked">
+                            <span class="text-sm text-gray-700">Topup</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="itemType" value="fastSelling"
+                                class="w-4 h-4 text-teal-600 radio-checked">
+                            <span class="text-sm text-gray-700">Fast Selling Item</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Group Name and Department -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Group Name</label>
+                        <input type="text" id="groupName" placeholder="e.g., ARABIC, BIRYANI"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                        <input type="text" placeholder="Department"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                </div>
+
+                <!-- Normal Rate, Special Rate, Tax% -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Normal Rate</label>
+                        <input id="rate" type="number" value="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Special Rate</label>
+                        <input id="specialRate" type="number" value="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Tax%</label>
+                        <input id="tax" type="number" value="0"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                </div>
+
+                <!-- Note -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Note</label>
+                    <textarea rows="3" placeholder="Additional notes..."
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"></textarea>
+                </div>
+
+                <!-- Status Indicators -->
+                <div class="mb-4 space-y-2"> <label class="flex items-center"> <input type="checkbox" checked
+                            class="w-4 h-4 text-green-500 border-gray-300 rounded focus:ring-green-500"> <span
+                            class="ml-2 text-sm text-gray-700">Active</span> </label> <label class="flex items-center">
+                        <input type="checkbox"
+                            class="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500"> <span
+                            class="ml-2 text-sm text-gray-700">Only supervisor can change sale rate during sales</span>
+                    </label>
+                </div>
+
+                <!-- Food Content -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Food Content:</label>
+                    <div class="flex gap-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="foodContent" value="veg" checked class="w-4 h-4 text-green-600">
+                            <span class="text-sm text-gray-700">Veg</span>
+                            <span class="inline-block w-4 h-4 bg-green-500 rounded-full"></span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="foodContent" value="nonVeg" class="w-4 h-4 text-red-600">
+                            <span class="text-sm text-gray-700">Non-Veg</span>
+                            <span class="inline-block w-4 h-4 bg-red-500 rounded-full"></span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="foodContent" value="egg" class="w-4 h-4 text-yellow-600">
+                            <span class="text-sm text-gray-700">Egg</span>
+                            <span class="inline-block w-4 h-4 bg-yellow-500 rounded-full"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Extra Options -->
+                <div class="border-t pt-4">
+                    <h3 class="text-sm font-semibold text-gray-700 mb-3">Extra Options</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="extraOption" value="full" class="w-4 h-4 text-teal-600">
+                                <span class="text-sm text-gray-700">FULL</span>
+                            </div>
+                            <button
+                                class="w-8 h-8 bg-cyan-500 hover:bg-cyan-600 text-white rounded flex items-center justify-center text-lg font-bold">
+                                ⋮
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="extraOption" value="half" class="w-4 h-4 text-teal-600">
+                                <span class="text-sm text-gray-700">HALF</span>
+                            </div>
+                            <button
+                                class="w-8 h-8 bg-cyan-500 hover:bg-cyan-600 text-white rounded flex items-center justify-center text-lg font-bold">
+                                ⋮
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="extraOption" value="large" class="w-4 h-4 text-teal-600">
+                                <span class="text-sm text-gray-700">LARGE</span>
+                            </div>
+                            <button
+                                class="w-8 h-8 bg-cyan-500 hover:bg-cyan-600 text-white rounded flex items-center justify-center text-lg font-bold">
+                                ⋮
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="extraOption" value="medium" class="w-4 h-4 text-teal-600">
+                                <span class="text-sm text-gray-700">MEDIUM</span>
+                            </div>
+                            <button
+                                class="w-8 h-8 bg-cyan-500 hover:bg-cyan-600 text-white rounded flex items-center justify-center text-lg font-bold">
+                                ⋮
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Work History -->
+                <div class="border-t pt-4">
+                    <h3 class="text-sm font-semibold text-gray-700 mb-2">Work History (Optional)</h3>
+                    <p class="text-xs text-gray-500 mb-3">Tell us about your work history and/or other relevant
+                        experiences</p>
+                    <button
+                        class="flex items-center gap-2 px-4 py-2 text-sm text-teal-600 border border-teal-600 rounded hover:bg-teal-50 transition-colors">
+                        <span class="text-lg font-bold">+</span>
+                        Add Another
+                    </button>
+                </div>
+            </div> <!-- Modal Footer -->
+            <div class="bg-gray-50 px-6 py-4 rounded-b-lg flex justify-end items-center border-t">
+                <div class="flex gap-3">
+                    <button id="saveBtn"
+                        class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 rounded-lg font-medium flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                        </svg> Save
+                    </button>
+                    <button id="closeModalBtn" onclick="closeModal()"
+                        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-medium flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- js -->
+    <script src="../JS/daterange.js"></script>
+    <script src="../JS/statusFilter.js"></script>
+    <script src="../JS/modal.js"></script>
+    <script src="../JS/pagination.js"></script>
+    <script src="../JS/filtter.js"></script>
+    <script src="../JS/sortTableData.js"></script>
+    <script src="../ui/alert.js"></script>
+    <script type="module" src="../JS/curd.js"></script>
+</body>
+
+</html>
