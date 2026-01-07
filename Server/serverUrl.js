@@ -1,2 +1,2 @@
 const SERVERURL ="https://pos-menu-be.onrender.com"
-export default SERVERURLgit
+export default SERVERURL
