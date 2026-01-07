@@ -1,2 +1,2 @@
-const SERVERURL ="http://localhost:3000"
-export default SERVERURL
+const SERVERURL ="https://pos-menu-be.onrender.com"
+export default SERVERURLgit
