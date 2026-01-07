@@ -39,7 +39,7 @@ function renderPageNumbers() {
 
     btn.className = `
       px-3 py-1 rounded-xl
-      ${i === currentPage ? "bg-blue-800/20 text-blue-500" : "bg-gray-200"}
+      ${i === currentPage ? "bg-blue-800/20 text-blue-500" : "bg-white"}
     `;
 
     btn.onclick = () => {
